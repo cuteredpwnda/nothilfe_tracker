@@ -15,7 +15,7 @@ Dann kann man mit `xpath` die Elemente in der Infobox finden und auslesen. Dabei
 Damit das ganze schöner aussieht, habe ich mir eine `data` Klasse erstellt. Die kann man dann sehr einfach mit `pandas` als CSV exportieren.
 Ansonsten ist noch eine kleine `Logger` Klasse vorhanden, mit der ich mir anschauen kann, was passiert.
 
-Das Script läuft in einem Docker Container und wird mit einem Cronjob (aktuell) jede Minute ausgeführt. 
+Das Script läuft in einem Docker Container und wird mit einem Cronjob alle 15 Minuten (von der vollen Stunde) ausgeführt.
 
 ## Wie kann ich das installieren?
 
