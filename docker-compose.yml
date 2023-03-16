@@ -1,0 +1,10 @@
+services:
+  tracker:
+    image: "nothilfe_tracker_cron:v0.3.1"
+    build: .
+    container_name: "tracker"
+    volumes:
+      - tracker_data:/data
+
+volumes:
+  tracker_data:
