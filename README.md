@@ -1,6 +1,6 @@
 # Nothilfe Tracker
 
-Dieses Projekt trackt die Anzahl der Anträge zu der Soforthilfe für Studierende und Fachschüler*innen. (Link) [https://www.einmalzahlung200.de/eppsg-de]
+Dieses Projekt trackt die Anzahl der Anträge zu der Soforthilfe für Studierende und Fachschüler*innen. [Link](https://www.einmalzahlung200.de/eppsg-de)
 Da das BMBF netterweise deine Infobox mit der Anzahl der erfoglreichen Anträge und ausgezahlten Anträge auf der Seite hat, wollte ich das mal tracken.
 
 ## Hast du zu viel Zeit?
