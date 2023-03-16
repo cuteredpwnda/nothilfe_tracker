@@ -30,6 +30,7 @@ def main():
     d.paid_out_timestamp = parsed[4]
    
     d.to_csv()
+    LOGGER.log('tracker', LogLevel.INFO, 'Done!')
 
 class data:
     def __init__(self):
