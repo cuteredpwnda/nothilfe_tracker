@@ -26,7 +26,10 @@ def main():
     d.paid_out_sum = parsed[3]
     d.paid_out_timestamp = parsed[4]
 
-    print(d)
+    # create folder if it does not exist
+    if not os.path.exists('../data'):
+        os.mkdir('../data')
+        
     d.to_csv()
 
 class data:
