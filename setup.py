@@ -8,4 +8,5 @@ setup(name='nothilfe_tracker',
       author='Jonas Neubürger',
       author_email='jonas.neubuerger005@stud.fh-dortmund.de',
       packages=find_packages(include=['src', 'src.*']),
+      python_requires='>=3.11.2',
      )
