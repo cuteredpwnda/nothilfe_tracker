@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import numpy as np
 from lxml import html
 
@@ -39,3 +40,25 @@ def parse_page(page:bytes):
     paid_out_time = get_datetime(s)
 
     return successful_count, successful_time, paid_out_count, paid_out_sum, paid_out_time
+
+class LogLevel:
+    INFO = 'info'
+    ERROR = 'error'
+class Logger:
+    def __init__(self, log_location='../logs/tracker_log.log') -> None:
+        log_location = log_location
+
+    def log(self, caller:str,  level:LogLevel, message:str):
+        # compose the message
+        m = f'[{caller} {level}][{datetime.now()}]: {message}'
+
+        # create folder if it does not exist
+        if not os.path.exists('../logs'):
+            os.mkdir('../logs')
+        
+        if not os.path.exists(self.log_location):
+            with open(self.log_location, 'w') as f:
+                f.write(m)
+
+        with open(self.log_location, 'a') as f:
+            f.write(m)

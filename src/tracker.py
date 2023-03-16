@@ -4,9 +4,11 @@ import numpy as np
 import pandas as pd
 import datetime
 
-from helpers import parse_page
+from helpers import parse_page, Logger, LogLevel
 
 DATA_LOCATION = '../data/data.csv'
+LOG_LOCATION = '../logs/tracker_log.log'
+LOGGER = Logger(LOG_LOCATION)
 
 def main():
     url = 'https://www.einmalzahlung200.de/eppsg-de'
@@ -14,6 +16,7 @@ def main():
     page = requests.get(url)
     status = page.status_code
     if status != 200:
+        LOGGER.log('tracker', LogLevel.ERROR, 'Could not get the page!')
         raise Exception('Could not get the page')
 
     parsed = parse_page(page)
@@ -25,11 +28,7 @@ def main():
     d.paid_out = parsed[2]
     d.paid_out_sum = parsed[3]
     d.paid_out_timestamp = parsed[4]
-
-    # create folder if it does not exist
-    if not os.path.exists('../data'):
-        os.mkdir('../data')
-        
+   
     d.to_csv()
 
 class data:
@@ -55,19 +54,29 @@ class data:
         }
 
     def to_csv(self):
+        # create folder if it does not exist
+        if not os.path.exists('../data'):
+            os.mkdir('../data')
+            LOGGER.log('tracker', LogLevel.INFO, 'Created data folder at ../data')
+            
         df = pd.DataFrame([self.__dict__()])
         if not os.path.exists(DATA_LOCATION):
             df.to_csv(DATA_LOCATION, index=False)
+            LOGGER.log('tracker', LogLevel.INFO, 'Created data csv at {DATA_LOCATION}')
         else:
             # check if the data is already in the csv
             df_csv = pd.read_csv(DATA_LOCATION)
             df_csv['succesful_timestamp'] = pd.to_datetime(df_csv['succesful_timestamp'])
             df_csv['paid_out_timestamp'] = pd.to_datetime(df_csv['paid_out_timestamp'])
             if self.succesful_timestamp in df_csv['succesful_timestamp'].values and self.paid_out_timestamp in df_csv['paid_out_timestamp'].values:
-                print('Data is already in the csv. Skipping...')
+                LOGGER.log('tracker', LogLevel.INFO, 'Data already in csv. Skipping...')
                 return
             pd.concat([pd.read_csv(DATA_LOCATION), df], ignore_index=True).to_csv(DATA_LOCATION, index=False)
-        
-
+            LOGGER.log('tracker', LogLevel.INFO, 'Wrote data to csv.')
+    
+    def to_json(self):
+        return self.__dict__()
+    
+            
 if __name__ == '__main__':
     main()
