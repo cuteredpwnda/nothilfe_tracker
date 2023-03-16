@@ -24,4 +24,4 @@ Die Daten findest du dann, wenn du mit `docker exec -it tracker /bin/bash` die i
 
 ## Hast du schon deine 200€ bekommen?
 
-**Ja** um am 16.03.2023 um 14:12 war das Geld auf meinem Konto. Beantragt habe ich am 15.03.2023 um 07:38.
+**Ja**, am 16.03.2023 um 14:12 war das Geld auf meinem Konto! Beantragt habe ich am 15.03.2023 um 07:38.
