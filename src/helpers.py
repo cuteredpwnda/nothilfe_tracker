@@ -1,13 +1,14 @@
 from datetime import datetime
 import os
+import re
 import numpy as np
 from lxml import html
 
 def get_datetime(s:str):
     date, time = s.split(', ')
     day, month, year = date.split('.')
-    hour, minute = time.split(' ')[0].split('.')
-    return datetime(int(year), int(month), int(day), int(hour), int(minute))
+    hour, minute = re.split(r'\W', time.split(' ')[0])
+    return datetime(int(year), int(month), int(day), int(hour), int(minute), 0, 0).isoformat()
 
 def parse_page(page:bytes):
     # Parse the content
@@ -46,11 +47,11 @@ class LogLevel:
     ERROR = 'error'
 class Logger:
     def __init__(self, log_location='../logs/tracker_log.log') -> None:
-        log_location = log_location
+        self.log_location = log_location
 
     def log(self, caller:str,  level:LogLevel, message:str):
         # compose the message
-        m = f'[{caller} {level}][{datetime.now()}]: {message}'
+        m = f'[{caller} {level}][{datetime.now()}]: {message}\n'
 
         # create folder if it does not exist
         if not os.path.exists('../logs'):

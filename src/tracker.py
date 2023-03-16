@@ -12,6 +12,7 @@ LOG_LOCATION = '../logs/tracker_log.log'
 
 def main():
     logger = Logger(LOG_LOCATION)
+    logger.log('tracker', LogLevel.INFO, 'Start scraping einmalzahlung200.de...')
     url = 'https://www.einmalzahlung200.de/eppsg-de'
     # Get the page
     page = requests.get(url)
@@ -31,7 +32,7 @@ def main():
     d.paid_out_timestamp = parsed[4]
    
     d.to_csv()
-    logger.log('tracker', LogLevel.INFO, 'Done!')
+    logger.log('tracker', LogLevel.INFO, 'Done!\n')
 
 class data:
     def __init__(self):
@@ -42,6 +43,9 @@ class data:
         self.paid_out_sum:(np.int64 | None) = None
         self.paid_out_timestamp:(datetime.datetime | None) = None
         self.logger = Logger(LOG_LOCATION)
+
+    def check_logger(self):
+        print(self.logger.log_location)
 
     def __str__(self):
         return f'{self.timestamp} | Anträge gestellt: {self.successful_count} ({self.succesful_timestamp}) | Anträge ausgezahlt: {self.paid_out}, Gesamt: {self.paid_out_sum}€ ({self.paid_out_timestamp})'
@@ -69,8 +73,8 @@ class data:
         else:
             # check if the data is already in the csv
             df_csv = pd.read_csv(DATA_LOCATION)
-            df_csv['succesful_timestamp'] = pd.to_datetime(df_csv['succesful_timestamp'])
-            df_csv['paid_out_timestamp'] = pd.to_datetime(df_csv['paid_out_timestamp'])
+            # df_csv['succesful_timestamp'] = pd.to_datetime(df_csv['succesful_timestamp'])
+            # df_csv['paid_out_timestamp'] = pd.to_datetime(df_csv['paid_out_timestamp'])
             if self.succesful_timestamp in df_csv['succesful_timestamp'].values and self.paid_out_timestamp in df_csv['paid_out_timestamp'].values:
                 self.logger.log('tracker', LogLevel.INFO, 'Data already in csv. Skipping...')
                 return
