@@ -9,7 +9,6 @@ from helpers import parse_page, Logger, LogLevel
 DATA_LOCATION = '../data/data.csv'
 LOG_LOCATION = '../logs/tracker_log.log'
 
-
 def main():
     logger = Logger(LOG_LOCATION)
     logger.log('tracker', LogLevel.INFO, 'Start scraping einmalzahlung200.de...')
